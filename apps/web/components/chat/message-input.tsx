@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, KeyboardEvent } from "react";
 import { Button } from "@/components/ui/button";
-import { Send, Paperclip, Mic, Sparkles } from "lucide-react";
+import { Send, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface MessageInputProps {
@@ -57,20 +57,6 @@ export function MessageInput({
           disabled && "opacity-60"
         )}
       >
-        {/* Left actions */}
-        <div className="flex items-center gap-1 pb-1">
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            className="h-8 w-8 rounded-full text-muted-foreground hover:text-foreground"
-            disabled={disabled}
-          >
-            <Paperclip className="h-4 w-4" />
-            <span className="sr-only">Attach file</span>
-          </Button>
-        </div>
-
         {/* Textarea */}
         <div className="relative flex-1">
           <textarea
@@ -83,23 +69,12 @@ export function MessageInput({
             placeholder={placeholder}
             disabled={disabled}
             rows={1}
-            className="w-full resize-none bg-transparent py-2 text-sm placeholder:text-muted-foreground focus:outline-none disabled:cursor-not-allowed"
+            className="w-full resize-none bg-transparent py-2 px-2 text-sm placeholder:text-muted-foreground focus:outline-none disabled:cursor-not-allowed"
           />
         </div>
 
-        {/* Right actions */}
-        <div className="flex items-center gap-1 pb-1">
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            className="h-8 w-8 rounded-full text-muted-foreground hover:text-foreground"
-            disabled={disabled}
-          >
-            <Mic className="h-4 w-4" />
-            <span className="sr-only">Voice input</span>
-          </Button>
-          
+        {/* Send button */}
+        <div className="flex items-center pb-1">
           <Button
             onClick={handleSubmit}
             disabled={disabled || !input.trim()}

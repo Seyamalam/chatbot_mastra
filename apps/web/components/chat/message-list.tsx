@@ -39,23 +39,6 @@ export function MessageList({
         </div>
         <div className="space-y-2">
           <h3 className="text-xl font-semibold text-foreground">Start a conversation</h3>
-          <p className="max-w-sm text-muted-foreground">
-            Ask me anything! I can help with your Google contacts, emails, and more.
-          </p>
-        </div>
-        <div className="mt-4 flex flex-wrap justify-center gap-2">
-          {[
-            "Show my recent emails",
-            "Find contact info for...",
-            "Summarize my inbox",
-          ].map((suggestion) => (
-            <button
-              key={suggestion}
-              className="rounded-full border border-border bg-card px-4 py-2 text-sm text-muted-foreground transition-all hover:border-primary/50 hover:bg-accent hover:text-foreground"
-            >
-              {suggestion}
-            </button>
-          ))}
         </div>
       </div>
     );

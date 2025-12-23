@@ -4,7 +4,7 @@ import { useState } from "react";
 import { signIn } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { Sparkles, Mail, Shield, Zap, MessageSquare } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
@@ -17,7 +17,7 @@ export default function LoginPage() {
     try {
       await signIn.social({
         provider: "google",
-        callbackURL: "/",
+        callbackURL: window.location.origin + "/",
       });
     } catch (err) {
       setError(
@@ -28,7 +28,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="relative flex min-h-screen">
+    <div className="relative flex min-h-screen items-center justify-center">
       {/* Theme toggle */}
       <div className="absolute top-4 right-4 z-10">
         <ThemeToggle />
@@ -41,150 +41,51 @@ export default function LoginPage() {
       <div className="absolute top-20 left-20 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
       <div className="absolute bottom-20 right-20 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
 
-      {/* Left side - Branding */}
-      <div className="relative hidden w-1/2 flex-col justify-between p-12 lg:flex">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary shadow-lg">
-            <Sparkles className="h-5 w-5 text-primary-foreground" />
+      {/* Login form */}
+      <div className="relative w-full max-w-md p-8">
+        {/* Logo */}
+        <div className="mb-8 flex items-center justify-center gap-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary shadow-lg">
+            <Sparkles className="h-6 w-6 text-primary-foreground" />
           </div>
-          <span className="text-xl font-semibold">AI Chat</span>
+          <span className="text-2xl font-semibold">Simple Chatbot</span>
         </div>
 
-        <div className="space-y-8">
-          <div>
-            <h1 className="text-4xl font-bold leading-tight">
-              Your intelligent
-              <br />
-              <span className="text-primary">conversation partner</span>
-            </h1>
-            <p className="mt-4 text-lg text-muted-foreground max-w-md">
-              Connect your Google account to unlock powerful AI assistance with access to your contacts and emails.
+        {/* Login card */}
+        <div className="glass rounded-2xl border border-border/50 p-8 shadow-xl">
+          <div className="mb-8 text-center">
+            <h2 className="text-2xl font-bold">Welcome back</h2>
+            <p className="mt-2 text-muted-foreground">
+              Sign in to continue
             </p>
           </div>
 
-          <div className="space-y-4">
-            <FeatureItem
-              icon={<MessageSquare className="h-5 w-5" />}
-              title="Smart Conversations"
-              description="Natural language AI that remembers context"
-            />
-            <FeatureItem
-              icon={<Mail className="h-5 w-5" />}
-              title="Email Integration"
-              description="Search and summarize your Gmail inbox"
-            />
-            <FeatureItem
-              icon={<Shield className="h-5 w-5" />}
-              title="Secure & Private"
-              description="Your data stays protected with OAuth 2.0"
-            />
-            <FeatureItem
-              icon={<Zap className="h-5 w-5" />}
-              title="Real-time Streaming"
-              description="Watch responses appear as they're generated"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Right side - Login form */}
-      <div className="relative flex w-full items-center justify-center p-8 lg:w-1/2">
-        <div className="w-full max-w-md">
-          {/* Mobile logo */}
-          <div className="mb-8 flex items-center justify-center gap-3 lg:hidden">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary shadow-lg">
-              <Sparkles className="h-6 w-6 text-primary-foreground" />
+          {error && (
+            <div className="mb-6 rounded-lg bg-destructive/10 border border-destructive/20 p-4 text-sm text-destructive">
+              <p className="font-medium">Sign in failed</p>
+              <p className="mt-1 text-destructive/80">{error}</p>
             </div>
-            <span className="text-2xl font-semibold">AI Chat</span>
-          </div>
+          )}
 
-          {/* Login card */}
-          <div className="glass rounded-2xl border border-border/50 p-8 shadow-xl">
-            <div className="mb-8 text-center">
-              <h2 className="text-2xl font-bold">Welcome back</h2>
-              <p className="mt-2 text-muted-foreground">
-                Sign in to continue to your AI assistant
-              </p>
-            </div>
-
-            {error && (
-              <div className="mb-6 rounded-lg bg-destructive/10 border border-destructive/20 p-4 text-sm text-destructive">
-                <p className="font-medium">Sign in failed</p>
-                <p className="mt-1 text-destructive/80">{error}</p>
-              </div>
+          <Button
+            onClick={handleGoogleSignIn}
+            disabled={isLoading}
+            variant="outline"
+            className="w-full h-12 text-base font-medium border-2 hover:bg-accent transition-all duration-200"
+          >
+            {isLoading ? (
+              <span className="flex items-center gap-3">
+                <LoadingSpinner />
+                Connecting...
+              </span>
+            ) : (
+              <span className="flex items-center gap-3">
+                <GoogleIcon />
+                Continue with Google
+              </span>
             )}
-
-            <Button
-              onClick={handleGoogleSignIn}
-              disabled={isLoading}
-              variant="outline"
-              className="w-full h-12 text-base font-medium border-2 hover:bg-accent transition-all duration-200"
-            >
-              {isLoading ? (
-                <span className="flex items-center gap-3">
-                  <LoadingSpinner />
-                  Connecting...
-                </span>
-              ) : (
-                <span className="flex items-center gap-3">
-                  <GoogleIcon />
-                  Continue with Google
-                </span>
-              )}
-            </Button>
-
-            <div className="mt-6 flex items-center gap-4">
-              <div className="h-px flex-1 bg-border" />
-              <span className="text-xs text-muted-foreground">or</span>
-              <div className="h-px flex-1 bg-border" />
-            </div>
-
-            <p className="mt-6 text-center text-sm text-muted-foreground">
-              By continuing, you agree to our{" "}
-              <a href="#" className="text-primary hover:underline">
-                Terms of Service
-              </a>{" "}
-              and{" "}
-              <a href="#" className="text-primary hover:underline">
-                Privacy Policy
-              </a>
-            </p>
-          </div>
-
-          {/* Trust badges */}
-          <div className="mt-8 flex items-center justify-center gap-6 text-muted-foreground">
-            <div className="flex items-center gap-2 text-xs">
-              <Shield className="h-4 w-4" />
-              <span>Secure login</span>
-            </div>
-            <div className="flex items-center gap-2 text-xs">
-              <Zap className="h-4 w-4" />
-              <span>Fast & reliable</span>
-            </div>
-          </div>
+          </Button>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function FeatureItem({
-  icon,
-  title,
-  description,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}) {
-  return (
-    <div className="flex items-start gap-4">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-        {icon}
-      </div>
-      <div>
-        <h3 className="font-medium">{title}</h3>
-        <p className="text-sm text-muted-foreground">{description}</p>
       </div>
     </div>
   );

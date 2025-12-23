@@ -53,10 +53,15 @@ function ChatContent() {
       return res.json();
     },
     enabled: !!session && !!currentThreadId,
+    staleTime: 0,
   });
 
+  // Track if we're in the middle of sending a message to avoid overwriting local state
+  const isSendingRef = useRef(false);
+
   useEffect(() => {
-    if (historyData?.messages) {
+    // Don't overwrite messages if we're currently sending (to preserve optimistic updates)
+    if (historyData?.messages && !isSendingRef.current) {
       setMessages(
         historyData.messages.map((msg: any) => ({
           id: msg.id || crypto.randomUUID(),
@@ -91,6 +96,8 @@ function ChatContent() {
     async (content: string) => {
       if (isStreaming) return;
 
+      isSendingRef.current = true;
+      
       let threadId = currentThreadId;
       if (!threadId) {
         const res = await fetch(`${API_URL}/chat/threads`, {
@@ -99,7 +106,10 @@ function ChatContent() {
           credentials: "include",
           body: JSON.stringify({ title: content.slice(0, 50) }),
         });
-        if (!res.ok) return;
+        if (!res.ok) {
+          isSendingRef.current = false;
+          return;
+        }
         const data = await res.json();
         threadId = data.thread.id;
         setCurrentThreadId(threadId);
@@ -168,6 +178,7 @@ function ChatContent() {
         ]);
       } finally {
         setIsStreaming(false);
+        isSendingRef.current = false;
       }
     },
     [isStreaming, currentThreadId, router, queryClient]
