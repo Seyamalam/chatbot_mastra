@@ -98,8 +98,6 @@ cd packages/shared
 bun run db:push
 ```
 
-Mastra will automatically create its tables (`mastra_threads`, `mastra_messages`, etc.) on first run.
-
 ## Running the App
 
 ### Development Mode
@@ -163,22 +161,10 @@ bun test src/__tests__/auth.test.ts
 - **Google Gmail**: Ask the AI about your recent emails
 - **Observability**: Built-in telemetry for debugging and monitoring
 
-## Troubleshooting
-
-### "Google access token not available"
-- Ensure you've signed in with Google
-- Check that the OAuth scopes include `contacts.readonly` and `gmail.readonly`
-- Try signing out and signing back in
-
-### Database connection errors
-- Verify PostgreSQL is running
-- Check `DATABASE_URL` in your `.env` file
-- Ensure the pgvector extension is installed
-
-### OAuth redirect errors
-- Verify the redirect URI in Google Cloud Console matches `http://localhost:3001/api/auth/callback/google`
-- Check `BETTER_AUTH_URL` is set to `http://localhost:3001`
-
 ## License
 
 MIT
+
+---
+
+Made with ❤️ by [Touhidul Alam Seyam](https://github.com/seyamalam) for a technical interview.
