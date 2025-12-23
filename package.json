@@ -1,0 +1,26 @@
+{
+  "name": "chatbot",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "bun run --filter '*' dev",
+    "dev:web": "bun run --filter @chatbot/web dev",
+    "dev:api": "bun run --filter @chatbot/api dev",
+    "build": "bun run --filter '*' build",
+    "test": "bun test",
+    "lint": "bun run --filter '*' lint",
+    "typecheck": "bun run --filter '*' typecheck"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^2.0.23",
+    "@types/node": "^25.0.3",
+    "postgres": "^3.4.7"
+  }
+}
