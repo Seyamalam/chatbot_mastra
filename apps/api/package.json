@@ -12,11 +12,13 @@
     "test": "bun test"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^2.0.23",
+    "@ai-sdk/google": "^1.2.0",
     "@chatbot/shared": "workspace:*",
+    "@mastra/ai-sdk": "^0.3.3",
     "@mastra/core": "^0.24.9",
     "@mastra/memory": "^0.15.13",
     "@mastra/pg": "^0.17.10",
+    "ai": "^6.0.1",
     "better-auth": "^1.2.0",
     "hono": "^4.6.0",
     "zod": "^3.24.0"

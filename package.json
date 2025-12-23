@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "bun run --filter '*' dev",
+    "dev": "bun run --filter './apps/*' dev",
     "dev:web": "bun run --filter @chatbot/web dev",
     "dev:api": "bun run --filter @chatbot/api dev",
     "build": "bun run --filter '*' build",
@@ -16,10 +16,10 @@
     "typecheck": "bun run --filter '*' typecheck"
   },
   "devDependencies": {
-    "typescript": "^5.7.0"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^2.0.23",
+    "@ai-sdk/google": "^1.2.0",
     "@types/node": "^25.0.3",
     "postgres": "^3.4.7"
   }

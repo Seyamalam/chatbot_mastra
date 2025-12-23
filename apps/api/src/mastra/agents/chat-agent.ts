@@ -1,7 +1,6 @@
 import { Agent } from "@mastra/core/agent";
 import { Memory } from "@mastra/memory";
 import { PostgresStore, PgVector } from "@mastra/pg";
-import { openai } from "@ai-sdk/openai";
 import { env } from "../../config/env";
 import { googleContactsTool } from "../tools/google-contacts";
 import { googleGmailTool } from "../tools/google-gmail";
@@ -12,11 +11,16 @@ const connectionString = env.DATABASE_URL;
 const memory = new Memory({
   storage: new PostgresStore({ connectionString }),
   vector: new PgVector({ connectionString }),
+  embedder: "google/text-embedding-004",
   options: {
     lastMessages: 20,
     semanticRecall: {
-      topK: 3,
-      messageRange: 2,
+      topK: 3, // Retrieve 3 most semantically similar messages
+      messageRange: 2, // Include 2 messages before and after each match for context
+      scope: "resource", // Search across all threads for this user (enables cross-conversation recall)
+    },
+    threads: {
+      generateTitle: true, // Auto-generate thread titles from first message
     },
   },
 });
@@ -28,7 +32,7 @@ export const chatAgent = new Agent({
 When asked about contacts, use the googleContactsTool.
 When asked about emails, use the googleGmailTool.
 Be concise and helpful in your responses.`,
-  model: openai("gpt-4o-mini"),
+  model: "google/gemini-2.0-flash",
   memory,
   tools: { googleContactsTool, googleGmailTool },
 });

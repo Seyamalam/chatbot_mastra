@@ -18,8 +18,8 @@ export const env = {
   BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET || "",
   BETTER_AUTH_URL: process.env.BETTER_AUTH_URL || "http://localhost:3001",
   
-  // OpenAI (for Mastra agent)
-  OPENAI_API_KEY: process.env.OPENAI_API_KEY || "",
+  // Google AI (for Mastra agent)
+  GOOGLE_GENERATIVE_AI_API_KEY: process.env.GOOGLE_GENERATIVE_AI_API_KEY || "",
 } as const;
 
 export function validateEnv() {
@@ -28,7 +28,7 @@ export function validateEnv() {
     "GOOGLE_CLIENT_ID", 
     "GOOGLE_CLIENT_SECRET",
     "BETTER_AUTH_SECRET",
-    "OPENAI_API_KEY",
+    "GOOGLE_GENERATIVE_AI_API_KEY",
   ];
   
   const missing = required.filter((key) => !env[key as keyof typeof env]);

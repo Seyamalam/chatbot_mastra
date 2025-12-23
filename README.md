@@ -6,7 +6,7 @@ A full-stack AI chatbot application with Google OAuth authentication, conversati
 
 - **Frontend**: Next.js 16 with TanStack Query
 - **Backend**: Hono (Bun runtime)
-- **AI**: Mastra with OpenAI GPT-4o-mini
+- **AI**: Mastra with Google Gemini 2.0 Flash (model router)
 - **Auth**: Better-Auth with Google OAuth
 - **Database**: PostgreSQL with Drizzle ORM
 - **Memory**: Mastra Memory with semantic recall (PgVector)
@@ -16,7 +16,7 @@ A full-stack AI chatbot application with Google OAuth authentication, conversati
 - [Bun](https://bun.sh/) v1.0+
 - [PostgreSQL](https://www.postgresql.org/) 15+ with pgvector extension
 - [Google Cloud Console](https://console.cloud.google.com/) project with OAuth credentials
-- [OpenAI API Key](https://platform.openai.com/api-keys)
+- [Google AI Studio API Key](https://aistudio.google.com/apikey)
 
 ## Project Structure
 
@@ -81,7 +81,7 @@ GOOGLE_CLIENT_SECRET="your-google-client-secret"
 BETTER_AUTH_SECRET="generate-a-random-32-char-secret"
 BETTER_AUTH_URL="http://localhost:3001"
 FRONTEND_URL="http://localhost:3000"
-OPENAI_API_KEY="your-openai-api-key"
+GOOGLE_GENERATIVE_AI_API_KEY="your-google-ai-api-key"
 ```
 
 Generate a secure secret for `BETTER_AUTH_SECRET`:
